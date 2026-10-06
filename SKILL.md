@@ -1,84 +1,93 @@
 ---
 name: asy
-description: "Bilingual (English / Chinese) writing skill. Long paragraphs follow yomiyasu-style natural prose rules; short summaries and non-sentence structures (schema, tables, lists, field names) follow ASD-STE100-style controlled language rules."
+description: Functional document writing in English and Chinese. Use for editing prose, summaries, and schemas with Yomiyasu-style prose rules and ASD-STE100 structure rules.
 ---
 
-# Asy — Bilingual Writing Skill
+# Asy: Bilingual Writing Skill
 
-Asy 把两种书写规范组合在一起。输出前先判断每个部分属于哪一层，再套用对应规则：
+Asy combines two writing standards. Classify each part of the output before writing, then apply the matching rules.
 
-| 层 | 内容 | 规则 |
+| Layer | Content | Standard |
 |---|---|---|
-| Prose | 长段落、解释性正文 | yomiyasu 式自然散文规则 — `references/prose-rules.md` |
-| Summary | 短总结、TL;DR、要点、结论、标题 | ASD-STE100 受控语言规则 — `references/ste100-rules.md` |
-| Schema | 非句子结构：schema、表格、列表、字段名、枚举值 | ASD-STE100 受控语言规则 — `references/ste100-rules.md` |
+| Prose | Long paragraphs and explanatory text | Natural prose rules in `references/{language}/prose-rules.md` |
+| Summary | Short summaries, TL;DRs, key points, conclusions, and headings | Controlled language rules in `references/{language}/ste100-rules.md` |
+| Schema | Non-sentence structures, including schemas, tables, lists, field names, and enum values | Controlled language rules in `references/{language}/ste100-rules.md` |
 
-写之前先读取对应层的参考文档。
+Use `en` for English and `zh` for Chinese in reference paths.
 
-## Step 0: 语言选择（写作前必须先做）
+## Step 0: Select the Output Language
 
-1. 用户已明确指定语言（"用中文写"、"in English"、"English only"）→ 直接使用，跳到 Step 1。
-2. 用户未指定语言 → 先弹出选择，再开始写作：
+1. If the user specifies a language, use it and continue to Step 1.
+2. If the user does not specify a language, ask them to choose English or Chinese before writing. English is the default if the user does not answer.
+3. Apply the selected language to all reader-facing text, including prose, summaries, headings, and table descriptions.
+4. Keep schema identifiers, such as keys, field names, and enum values, in English regardless of the selected language.
 
-   > 请选择输出语言 / Please choose the output language:
-   > 1. English（默认）
-   > 2. 中文
+## Step 1: Read the Matching References
 
-   用户未回答时，默认使用 English。
-3. 选定的语言应用于所有人可读文本：正文、总结、标题、表格说明。
-4. Schema 标识符（键名、字段名、枚举值）无论选定哪种语言，一律使用英文。
+Use only the reference set for the selected output language:
 
-## 共享不变量（所有层都适用）
+- Read `references/{language}/examples.md` for examples in the selected language.
+- For prose, read `references/{language}/prose-rules.md`.
+- For summaries or schemas, read `references/{language}/ste100-rules.md`.
 
-1. **保持含义。** 主张、轻重、断言强度（保留 hedge 的强度）、每句的功用（说明 / 建议 / 规则 / 计划 / 评价）在改写前后必须一致。
-2. **不添加。** 不添加源文没有的主体、原因、数值、例子、术语。
-3. **不删除。** 不删除条件、范围限定、数值、例外、安全限定。
-4. **一句话一个意思，一段话一个话题。**
-5. **不修已合规的文本。** 输入已符合对应层规范时直接说明，不强行改写。
-6. **消除歧义优先于缩短。** 句子无歧义即停，不追求最短。
+Do not use examples from the other language directory as the output pattern.
 
-## 分层规则（速览）
+## Shared Invariants
 
-### Prose — yomiyasu 风格
-- 每句有可追溯的主语和谓语；不拟人、无比喻。
-- 无自我标注式开头（"重要的是"、"It's important to note that"）、无空预告句。
-- 保持文档立场（建议 / 规则 / 说明），不改变句子强度。
-- 连接词必须指向可追溯的关系；代词只在指代明确时保留。
-- 无 emoji、无装饰性冒号、无 em dash；加粗和列表克制使用。
-- 完整规则：`references/prose-rules.md`
+Apply these rules to every layer:
 
-### Summary — ASD-STE100 风格
-- 主动语态，一句一个意思，≤20 词（EN）/ ≤20 字（ZH）。
-- 无分号、无短语动词、无同义词轮换、无 hedge 堆叠、无名词化、无营销形容词。
-- 简单时态；保留 hedge，不升级为事实。
-- 完整规则：`references/ste100-rules.md`
+1. **Preserve meaning.** Keep the claim, emphasis, certainty, and sentence function unchanged. Preserve the strength of each hedge.
+2. **Do not add information.** Do not add an actor, cause, number, example, or term that is absent from the source.
+3. **Do not remove information.** Keep conditions, scope, numbers, exceptions, and safety qualifications.
+4. **Use one idea per sentence and one topic per paragraph.**
+5. **Do not edit compliant text.** If the input follows the rules for its layer, say so without rewriting it.
+6. **Resolve ambiguity before shortening.** Stop when the sentence is clear. Do not shorten it for its own sake.
 
-### Schema — ASD-STE100 风格
-- 一个键一个概念，用最平常的词，风格一致。
-- 全文一个概念一个术语；无未定义缩写。
-- 描述：一句话，≤15 词，不用 hedge（用 required/optional 表达）。
-- 枚举值一个值一个含义；表头 ≤3 词名词短语；列表项结构平行。
-- 完整规则：`references/ste100-rules.md`
+## Layer Rules
 
-## 输出格式
+### Prose: Yomiyasu Style
 
-**默认：只输出最终文本。** 不加前言、不报规则名、不总结改动、不附加收尾询问。
+- Give each sentence a traceable subject and predicate. Avoid personification and metaphors.
+- Remove empty previews and openings that only label the text, such as "It's important to note that."
+- Preserve the document's stance: recommendation, rule, or description. Do not change sentence strength.
+- Use connectors only for clear relations. Keep pronouns only when their referents are unambiguous.
+- Do not use emoji, decorative colons, or long dashes. Use a hyphen (-) when a dash is necessary. Otherwise, rewrite with a period or comma.
+- Use bold and lists sparingly.
+- Read the full rules in `references/{language}/prose-rules.md`.
 
-用户要求看推理（"show the diff"、"explain the changes"、"before/after"、"解释改动"）时，改为输出表格：
+### Summary: ASD-STE100 Style
+
+- Use active voice and one idea per sentence. Limit each sentence to 20 words in English or 20 Chinese characters.
+- Do not use semicolons, phrasal verbs, synonym rotation, stacked hedges, nominalizations, or marketing adjectives.
+- Use simple tenses. Preserve hedges without changing a possibility into a fact.
+- Read the full rules in `references/{language}/ste100-rules.md`.
+
+### Schema: ASD-STE100 Style
+
+- Use one concept per key and ordinary terms. Follow one naming style throughout.
+- Use one term for each concept. Do not use undefined abbreviations.
+- Keep each description to one sentence of no more than 15 English words or 20 Chinese characters. Express optionality with a required or optional field, not a hedge.
+- Give each enum value one meaning. Keep table headers to three words or fewer. Keep list items parallel.
+- Read the full rules in `references/{language}/ste100-rules.md`.
+
+## Output Format
+
+Return only the final text by default. Do not add an introduction, name the rules, summarize the edits, or add a closing question.
+
+When the user asks to see the reasoning, such as "show the diff," "explain the changes," or "before/after," use a table with headers in the selected output language:
 
 | Rule violated | Original | Rewritten |
 |---|---|---|
 
-对刻意保留的较长表达，追加一行 `Kept as-is:`，说明保留的精确含义。
+For wording that remains longer to preserve precision, add `Kept as-is:` and state the exact meaning that must remain.
 
-## 边界
+## Boundaries
 
-- 不用于创意写作、营销文案、说服性文本。
-- Asy 修形式，不修内容。源文没有实质内容时，直接说明，不润色空洞。
-- 本 skill 应用 ASD-STE100 的结构纪律，不复制官方约 900 词词典，不宣称词典级合规。
+- Do not use this skill for creative writing, marketing copy, or persuasive text.
+- Asy edits form, not substance. If the source has no substantive content, say so without polishing empty text.
+- Asy applies the structural discipline of ASD-STE100. It does not reproduce the official dictionary of about 900 words or claim dictionary-level compliance.
 
 ## References
 
-- `references/prose-rules.md` — 长段落自然散文规则（yomiyasu 风格）
-- `references/ste100-rules.md` — 总结与非句子结构的受控语言规则（ASD-STE100 风格）
-- `references/examples.md` — EN / ZH 三层 before-after 示例
+- `references/en/` contains the English rules and examples.
+- `references/zh/` contains the Chinese rules and examples.
