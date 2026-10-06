@@ -21,12 +21,6 @@ Each language directory contains `prose-rules.md`, `ste100-rules.md`, and `examp
 
 This repository is the skill directory. Clone or copy it to a skills directory named `asy`.
 
-| Environment | Installation path |
-|---|---|
-| Zed, global | `~/.agents/skills/asy/` |
-| Zed or Claude Code, project-level | `<project>/.agents/skills/asy/` |
-| Claude Code, global | `~/.claude/skills/asy/` |
-
 ```bash
 git clone https://github.com/precisionz/asy ~/.agents/skills/asy
 ```
