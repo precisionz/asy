@@ -1,9 +1,9 @@
 ---
 name: asy
-description: Functional document writing in English and Chinese. Use for editing prose, summaries, and schemas with Yomiyasu-style prose rules and ASD-STE100 structure rules.
+description: Functional document writing skill for prose, summaries, and schemas.
 ---
 
-# Asy: Bilingual Writing Skill
+# Asy: Functional Document Writing Skill
 
 Asy combines two writing standards. Classify each part of the output before writing, then apply the matching rules.
 
@@ -17,10 +17,19 @@ Use `en` for English and `zh` for Chinese in reference paths.
 
 ## Step 0: Select the Output Language
 
-1. If the user specifies a language, use it and continue to Step 1.
-2. If the user does not specify a language, ask them to choose English or Chinese before writing. English is the default if the user does not answer.
-3. Apply the selected language to all reader-facing text, including prose, summaries, headings, and table descriptions.
-4. Keep schema identifiers, such as keys, field names, and enum values, in English regardless of the selected language.
+1. Before writing, always ask the user to choose `en` (English) or `zh` (Chinese).
+2. Ask even when the user has already specified a language. Do not treat a language in the request as the required selection.
+3. Do not start writing until the user selects `en` or `zh`. Do not use a default language.
+4. Apply the selected language to all reader-facing text, including prose, summaries, headings, and table descriptions.
+5. Keep schema identifiers, such as keys, field names, and enum values, in English regardless of the selected language.
+
+Use this prompt:
+
+```text
+Choose the output language:
+1. English (en)
+2. Chinese (zh)
+```
 
 ## Step 1: Read the Matching References
 

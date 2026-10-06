@@ -1,60 +1,69 @@
-# Asy - Bilingual Writing Skill
+# Asy: Functional Document Writing Skill
 
-Asy 是双语技术写作 skill：长段落遵循 yomiyasu 式自然散文规则；短总结与非句子结构（schema、表格、列表）遵循 ASD-STE100 受控语言规则。支持中文 / 英文输出（未指定语言时会弹出选择，默认英文）。
+"The limits of my language mean the limits of my world."
+- Ludwig Wittgenstein
 
-## 结构
+Asy is a functional document writing skill for prose, summaries, and schemas. It applies Yomiyasu-style rules to prose and ASD-STE100 structure rules to summaries and schemas.
 
-| 文件 | 作用 |
+Asy currently supports English and Chinese. Each language has its own reference set, which allows the skill to add languages over time.
+
+## Structure
+
+| File | Purpose |
 |---|---|
-| `SKILL.md` | English skill 入口：三层分工、语言选择、规则与示例路由 |
-| `references/en/` | English 规则与示例：`prose-rules.md`、`ste100-rules.md`、`examples.md` |
-| `references/zh/` | 中文规则与示例：`prose-rules.md`、`ste100-rules.md`、`examples.md` |
-| `asy.skill` | 离线包（zip 格式），打包时的目录快照 |
+| `SKILL.md` | Entry point, language selection, writing rules, and reference routing |
+| `references/en/` | English writing rules and examples |
+| `references/zh/` | Chinese writing rules and examples |
+| `asy.skill` | Offline package created from a snapshot of the skill directory |
 
-## 安装
+Each language directory contains `prose-rules.md`, `ste100-rules.md`, and `examples.md`.
 
-本仓库即 skill 文件夹本身。克隆或复制到任一 skills 目录，文件夹名为 `asy`：
+## Install
 
-| 环境 | 安装位置 |
+This repository is the skill directory. Clone or copy it to a skills directory named `asy`.
+
+| Environment | Installation path |
 |---|---|
-| Zed（全局） | `~/.agents/skills/asy/` |
-| Zed / Claude Code（项目级） | `<project>/.agents/skills/asy/` |
-| Claude Code（全局） | `~/.claude/skills/asy/` |
+| Zed, global | `~/.agents/skills/asy/` |
+| Zed or Claude Code, project-level | `<project>/.agents/skills/asy/` |
+| Claude Code, global | `~/.claude/skills/asy/` |
 
 ```bash
-# bash：安装到 Zed 全局目录
 git clone https://github.com/precisionz/asy ~/.agents/skills/asy
 ```
 
-## 离线包
+## Offline Package
 
-`asy.skill` 是 zip 压缩包，内含顶层 `asy/` 目录。解压到任一 skills 根目录，即得完整的 `asy/` 文件夹：
+The `asy.skill` file is a ZIP archive. It contains a top-level `asy/` directory. Extract it to a skills directory to install the skill.
 
 ```bash
-# bash / macOS（unzip 按内容识别，扩展名不限）
 unzip asy.skill -d ~/.agents/skills/
 ```
 
+On Windows, `Expand-Archive` requires a `.zip` extension:
+
 ```powershell
-# Windows PowerShell（Expand-Archive 只认 .zip 扩展名，先复制一份）
 Copy-Item asy.skill asy.zip
 Expand-Archive asy.zip -DestinationPath "$env:USERPROFILE\.agents\skills"
 Remove-Item asy.zip
 ```
 
-`asy.skill` 是打包时的快照；skill 目录更新后需重新打包。
+The package is a snapshot. Rebuild it after you update the skill directory.
 
-## 使用
+## Use
 
-对 agent 说"按 Asy 规范写 / write in Asy style"，或直接描述写作任务即可触发。未指定输出语言时会先询问：
+Ask an agent to write in Asy style or describe the writing task. Before every writing task, Asy must ask the user to choose an output language. This requirement applies even when the request already names a language.
 
+```text
+Choose the output language:
+1. English (en)
+2. Chinese (zh)
 ```
-请选择输出语言 / Please choose the output language:
-1. English（默认）
-2. 中文
-```
 
-## 来源
+Asy must wait for the user's selection. It does not use a default language.
 
-- Prose 层规则改编自 [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT）。
-- Summary / Schema 层规则派生自 ASD-STE100 Issue 9（2025-01）结构规则，经 [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill)（MIT）摘要；官方站点：[asd-ste100.org](https://asd-ste100.org)。官方词典不分发。
+## Sources
+
+- The prose rules are adapted from [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu) (MIT).
+- The summary and schema rules derive from ASD-STE100 Issue 9 (January 2025). They are summarized by [danyuchn/asd-ste100-skill](https://github.com/danyuchn/asd-ste100-skill) (MIT).
+- The official site is [asd-ste100.org](https://asd-ste100.org). This repository does not distribute the official dictionary.
