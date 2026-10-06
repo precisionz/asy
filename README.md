@@ -1,7 +1,7 @@
 # Asy: Functional Document Writing Skill
 
 "The limits of my language mean the limits of my world."
-- Ludwig Wittgenstein
+-- Ludwig Wittgenstein
 
 Asy is a functional document writing skill for prose, summaries, and schemas. It applies Yomiyasu-style rules to prose and ASD-STE100 structure rules to summaries and schemas.
 
